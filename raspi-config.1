@@ -1,0 +1,252 @@
+.TH RASPI-CONF 1 2023-07-21 "Raspberry Pi Foundation" "Programmers Manual"
+
+.SH NAME
+raspi-conf \- configure Raspberry Pi system
+.SH SYNOPSIS
+.B raspi-conf
+.I [nonint [parameters]]
+.SH DESCRIPTION
+.PP
+This tool provides a straightforward way of doing initial
+configuration of the Raspberry Pi. Although it can be run
+at any time, some of the options may have difficulties if
+you have heavily customised your installation.
+.SH OPTIONS
+.TP
+nonint \fIoption [parameters]\fP
+Non-interactively configure the specified option.
+.TP
+--expand-rootfs)
+Please reboot
+.TP
+--apply-os-config
+ZZZ
+.\"
+.\"
+.\"
+.SH NON-INTERACTIVE OPTIONS
+.LP
+\fBraspi-config\fR is primarily an interactive console tool, driven by
+user-selected menu options.  However, it does support non-interactive
+use, enabled via the \fInonint\fP option.  This section documents the
+commands available for non-interactive use.
+.LP
+Please be aware that different models of Raspberry Pi may have
+different options available.
+.\"
+.\"
+.TP
+.B do_serial \fI0/1/2\fP
+Enable or disable kernel messages on the serial connection
+.RS
+.IP 0
+Enable console over serial port
+.IP 1
+Disable console over serial port
+.IP 2
+Enable serial port
+.RE
+.TP
+.B do_expand_rootfs
+Request that the root filesystem be expanded at the next reboot.
+.TP
+.B do_overscan \fI0/1\fP
+Old TV sets had a significant variation in the size of the picture
+they produced; some had cabinets that overlapped the screen.  TV
+pictures were therefore given a black border so that none of the
+picture was lost: this is called \fIoverscan\fP.  Modern TVs and
+monitors don't need the border, and the signal doesn't allow for it.
+If the initial text shown on the screen disappears off the edge, you
+need to enable ovescan to bring the border back.
+.IP
+Any changes will take effect only after a reboot.  You can have
+greater control over the settings by editing \fIconfig.txt\fP. FIXME
+.IP
+On some displays, particularly monitors, disabling overscan will make
+the picture fill the whole screen and correct the resolution.  For
+other displays, it may be necessary to leave overscan enabled and
+adjust its values.
+.RS
+.IP 0
+Enable overscan
+.IP 1
+Disable overscan
+.RE
+.TP
+.B do_wifi_ssid_passphrase \fIssid\fR \fIpassphrase\fR [\fIhidden\fR] [\fIplain\fR]
+Set the wireless LAN SSID and passphrase.  Set \fIhidden\fP to 0 for
+visible, and 1 for hidden.  Set \fIplain\fP to 0 if the passphrase is
+already quoted, or 1 otherwise.
+.TP
+.B do_audio \fIN\fP
+Specify the audio output destination:
+.RS
+.IP 0
+bcm2835 headphones
+.IP 1
+vc4-hdmi-0
+.IP 2
+vc4-hdmi-1
+.RE
+.TP
+.B do_hostname \fIhostname\fP
+Set the visible name for this Raspberry Pi on a network
+.TP
+.B do_boot_wait \fI0/1\fP
+Wait for network connection before letting boot proceed.
+.RS
+.IP 0
+Boot without waiting for network connection
+.IP 1
+Boot after waiting for network connection
+.RE
+.TP
+.B do_boot_splash \fI0/1\fP
+Enable or disable the splash screen displayed at boot time
+.RS
+.IP 0
+Enable splash screen
+.IP 1
+Disable splash screen
+.RE
+.TP
+.B do_leds \fI0/1\fP
+If the model of Raspberry Pi permits it, you can change the behaviour
+of the power LED using this option
+.RS
+.IP 0
+Flash for disk activity
+.IP 1
+On constantly when power applied
+.RE
+.TP
+.B do_resolution \fIgroup\fP \fImode\fP
+Define the default HDMI/DVI video resolution to use when the sstem
+boots without a TC or monitor being connected.  This can have an
+effect on RealVNC if the VNC option is enabled.
+FIXME
+.TP
+.B do_pixdub \fI0/1\fP
+Enable/disable 2x2 pixel mapping.
+.RS
+.IP 0
+Enable pixel doubling
+.IP 1
+Disable pixel doubling
+.RE
+.TP
+.B do_composite \fI0/1\fP
+On the Raspbery Pi 4, enable composite video.  On models prior to the
+Raspberry Pi 4, composite video is enabled by default so this option
+is not required.
+.RS
+.IP 0
+Enable composite video
+.IP 1
+Disable composite video
+.RE
+.TP
+.B do_blanking \fI0/1\fP
+Enable or disable screen blanking
+.RS
+.IP 0
+Enable screen blanking
+.IP 1
+Disable screen blanking
+.RE
+.TP
+.B do_camera \fI0/1\fP
+Enable or disable the CSI camera interface
+.RS
+.IP 0
+Enable camera
+.IP 1
+Disable Camera
+.RE
+.TP
+.B do_ssh \fI0/1\fP
+Enable or disable remote command line access to your Raspberry Pi
+using SSH.
+.IP
+SSH allows you to remotely access the command line of the Raspberry Pi
+from another computer. SSH is disabled by default.  Read more about
+using SSH on the SSH Documentation Page (FIXME).  If connecting your
+Raspberry Pi directly to a public network, you should not enable SSH
+unless you have set up secure passwords for all users.
+.RS
+.IP 0
+Enable SSH
+.IP 1
+Disable SSH
+.RE
+.TP
+.B do_vnc \fI0/1\fP
+Enable or disable the RealVNC virtual network computing server.
+.RS
+.IP 0
+Enable VNC
+.IP 1
+Disable VNC
+.RE
+.TP
+.B do_spi \fi0/1\fP
+Enable or disable SPI interfaces and automatic loading of the SPI
+kernel module, needed for products such as PiFace.
+.RS
+.IP 0
+Enable SPI
+.IP 1
+Disable SPI
+.RE
+.TP
+.B do_i2c \fI0/1\fP
+Enable or disable I2C interfaces and automatic loading of the I2C
+kernel module.
+.RS
+.IP 0
+Enable I2C
+.IP 1
+Disable I2C
+.RE
+.TP
+.B do_onewire \fI0/1\fP
+Enable or disable the Dallas 1-wire interface.  This is usually used
+for DS18B20 temperature sensors.
+.RS
+.IP 0
+Enable 1-wire
+.IP 1
+Disable 1-wire
+.RE
+.TP
+.B do_rgpio \fI0/1\fP
+Enable or disable remote access to the GPIO pins.
+.RS
+.IP 0
+Enable remote GPIO
+.IP 1
+Disable remote GPIO
+.RE
+.\"
+.\"
+.SH EXIT STATUS
+.TP
+0
+Successful
+.TP
+1
+Bad?
+.TP
+255
+WTF?
+
+.SH ENVIRONMENT
+.SH FILES
+autoboot.txt
+config.txt
+.SH NOTES
+.SH BUGS
+See https://github.com/RPi-Distro/raspi-config/issues
+.SH EXAMPLES
+.SH SEE ALSO
+https://www.raspberrypi.com/documentation/computers/configuration.html
